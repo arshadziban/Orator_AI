@@ -21,7 +21,7 @@ OratorAI is a comprehensive full-stack web application that seamlessly integrate
 
 ## System Architecture
 
-![flow](./ui/flow_char.png)
+![flow](./ui/flow_chat.png)
 
 ## Conclusion
 
