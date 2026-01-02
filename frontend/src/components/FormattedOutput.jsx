@@ -2,6 +2,14 @@ import React, { useState, useRef, useEffect } from 'react'
 import ReactMarkdown from 'react-markdown'
 import '../styles/FormattedOutput.css'
 
+/**
+ * FormattedOutput Component
+ * 
+ * Displays the chat conversation history including:
+ * - User's transcribed input from audio
+ * - AI chatbot's response
+ * - Message statistics and formatting
+ */
 export default function FormattedOutput({ messages = [], onClear, isLoading }) {
   const [copiedId, setCopiedId] = useState(null)
   const chatContainerRef = useRef(null)
@@ -32,7 +40,7 @@ export default function FormattedOutput({ messages = [], onClear, isLoading }) {
             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
           </svg>
           <h3>Start a Conversation</h3>
-          <p>Record your voice or upload audio to begin</p>
+          <p>Record your voice or upload audio to begin chatting</p>
         </div>
       </div>
     )
@@ -42,7 +50,7 @@ export default function FormattedOutput({ messages = [], onClear, isLoading }) {
     <div className="output-section">
       <div className="chat-header">
         <div>
-          <h2>Chat</h2>
+          <h2>Conversation</h2>
           <p>{messages.length} message{messages.length !== 1 ? 's' : ''}</p>
         </div>
         <button className="btn-clear" onClick={onClear} disabled={isLoading}>
@@ -53,16 +61,17 @@ export default function FormattedOutput({ messages = [], onClear, isLoading }) {
       <div className="chat-container" ref={chatContainerRef}>
         {messages.map((msg) => (
           <div key={msg.id} className="chat-exchange">
-            {/* User Message */}
+            {/* User Message - Transcribed from Audio */}
             <div className="message user">
               <div className="message-bubble user-bubble">
-                {msg.original_text}
+                <span className="message-label">You (transcribed):</span>
+                {msg.user_input}
               </div>
               <button
                 className={`btn-copy-message ${
-                  copiedId === `${msg.id}-original` ? 'copied' : ''
+                  copiedId === `${msg.id}-user` ? 'copied' : ''
                 }`}
-                onClick={() => handleCopy(msg.original_text, `${msg.id}-original`)}
+                onClick={() => handleCopy(msg.user_input, `${msg.id}-user`)}
                 title="Copy message"
               >
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -72,17 +81,18 @@ export default function FormattedOutput({ messages = [], onClear, isLoading }) {
               </button>
             </div>
 
-            {/* Bot Response */}
+            {/* Chatbot Response */}
             <div className="message bot">
               <div className="message-bubble bot-bubble">
-                <ReactMarkdown>{removeCitations(msg.formal_text)}</ReactMarkdown>
+                <span className="message-label">OratorAI Chatbot:</span>
+                <ReactMarkdown>{removeCitations(msg.chatbot_response)}</ReactMarkdown>
               </div>
               <button
                 className={`btn-copy-message ${
-                  copiedId === `${msg.id}-formal` ? 'copied' : ''
+                  copiedId === `${msg.id}-bot` ? 'copied' : ''
                 }`}
-                onClick={() => handleCopy(msg.formal_text, `${msg.id}-formal`)}
-                title="Copy message"
+                onClick={() => handleCopy(msg.chatbot_response, `${msg.id}-bot`)}
+                title="Copy response"
               >
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
@@ -91,19 +101,19 @@ export default function FormattedOutput({ messages = [], onClear, isLoading }) {
               </button>
             </div>
 
-            {/* Message Stats */}
+            {/* Message Statistics */}
             <div className="message-stats-compact">
               <div className="stat-item-simple">
-                <span className="stat-number">{msg.original_text.length}</span>
+                <span className="stat-number">{msg.user_input.length}</span>
                 <span className="stat-arrow">→</span>
-                <span className="stat-number highlight">{msg.formal_text.length}</span>
+                <span className="stat-number highlight">{msg.chatbot_response.length}</span>
                 <span className="stat-name">characters</span>
               </div>
               <div className="stat-divider"></div>
               <div className="stat-item-simple">
-                <span className="stat-number">{msg.original_text.split(/\s+/).filter(w => w).length}</span>
+                <span className="stat-number">{msg.user_input.split(/\s+/).filter(w => w).length}</span>
                 <span className="stat-arrow">→</span>
-                <span className="stat-number highlight">{msg.formal_text.split(/\s+/).filter(w => w).length}</span>
+                <span className="stat-number highlight">{msg.chatbot_response.split(/\s+/).filter(w => w).length}</span>
                 <span className="stat-name">words</span>
               </div>
             </div>
@@ -113,7 +123,7 @@ export default function FormattedOutput({ messages = [], onClear, isLoading }) {
         {isLoading && (
           <div className="loading-indicator">
             <div className="spinner-small"></div>
-            <p>Processing audio...</p>
+            <p>Processing audio and generating response...</p>
           </div>
         )}
       </div>

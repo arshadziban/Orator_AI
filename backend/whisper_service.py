@@ -11,7 +11,21 @@ except Exception as e:
     model = None
 
 def process_audio(audio_path):
-    """Transcribe audio to text using Whisper."""
+    """
+    Transcribe audio to text using OpenAI's Whisper model.
+    
+    This function takes an audio file and converts it to text,
+    which can then be processed by the chatbot for intelligent responses.
+    
+    Args:
+        audio_path: Path to the audio file to transcribe
+        
+    Returns:
+        Transcribed text from the audio
+        
+    Raises:
+        Exception: If the model is not loaded or the audio file is invalid
+    """
     if model is None:
         raise Exception("Whisper model not loaded")
     
@@ -25,7 +39,7 @@ def process_audio(audio_path):
         print(f"[Whisper] Transcribing...")
         result = model.transcribe(audio_path)
         text = result["text"].strip()
-        print(f"[Whisper] ✓ Text: {text[:80] if len(text) > 80 else text}")
+        print(f"[Whisper] ✓ Transcription complete. Text: {text[:80] if len(text) > 80 else text}")
         
         return text
             

@@ -7,9 +7,9 @@ import traceback
 import tempfile
 import uuid
 from whisper_service import process_audio
-from rewrite_service import rewrite_formal
+from rewrite_service import generate_chatbot_response
 
-app = FastAPI()
+app = FastAPI(title="OratorAI Chatbot API", description="AI-powered chatbot with audio transcription")
 
 # Enable CORS
 app.add_middleware(
@@ -22,10 +22,17 @@ app.add_middleware(
 
 @app.get("/health")
 async def health():
+    """Health check endpoint"""
     return {"status": "ok"}
 
 @app.post("/transcribe")
 async def transcribe_audio(file: UploadFile = File(...)):
+    """
+    Transcribe audio file to text using Whisper model.
+    
+    - **file**: Audio file to transcribe (supports: wav, mp3, m4a, etc.)
+    - Returns: Transcribed text
+    """
     file_path = None
     
     try:
@@ -67,22 +74,22 @@ async def transcribe_audio(file: UploadFile = File(...)):
         print(f"  Readable: {os.access(file_path, os.R_OK)}")
         
         # Transcribe audio to text
-        print(f"\n[STEP 5] Calling process_audio()")
+        print(f"\n[STEP 5] Transcribing audio using Whisper")
         print(f"  Path being passed: {file_path}")
-        original_text = process_audio(file_path)
+        transcribed_text = process_audio(file_path)
         print(f"  ✓ Success")
         
-        # Polish the text to formal English
-        print(f"\n[STEP 6] Calling rewrite_formal()")
-        formal_text = rewrite_formal(original_text)
+        # Generate AI chatbot response
+        print(f"\n[STEP 6] Generating AI response from chatbot")
+        chatbot_response = generate_chatbot_response(transcribed_text)
         print(f"  ✓ Success")
         
         print(f"\n[SUCCESS] Processing complete")
         print(f"{'='*60}\n")
 
         return {
-            "original_text": original_text,
-            "formal_text": formal_text
+            "transcribed_text": transcribed_text,
+            "chatbot_response": chatbot_response
         }
         
     except FileNotFoundError as e:
@@ -100,9 +107,8 @@ async def transcribe_audio(file: UploadFile = File(...)):
             status_code=400,
             content={
                 "error": error_msg,
-                "detected_language": "unknown",
-                "original_text": error_msg,
-                "formal_english": error_msg
+                "transcribed_text": "",
+                "chatbot_response": ""
             }
         )
         
@@ -117,9 +123,8 @@ async def transcribe_audio(file: UploadFile = File(...)):
             status_code=400,
             content={
                 "error": error_msg,
-                "detected_language": "unknown",
-                "original_text": error_msg,
-                "formal_english": error_msg
+                "transcribed_text": "",
+                "chatbot_response": ""
             }
         )
     finally:

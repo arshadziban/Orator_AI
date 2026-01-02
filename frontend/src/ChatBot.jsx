@@ -3,6 +3,13 @@ import AudioRecorder from './components/AudioRecorder'
 import FormattedOutput from './components/FormattedOutput'
 import './styles/ChatBot.css'
 
+/**
+ * ChatBot Component
+ * 
+ * Main chatbot interface with audio transcription capability.
+ * Users can record or upload audio which is transcribed to text
+ * and processed by the AI chatbot for intelligent responses.
+ */
 export default function ChatBot() {
   const [isLoading, setIsLoading] = useState(false)
   const [chatMessages, setChatMessages] = useState([])
@@ -29,8 +36,8 @@ export default function ChatBot() {
       setChatMessages([...chatMessages, {
         id: Date.now(),
         type: 'message',
-        original_text: data.original_text,
-        formal_text: data.formal_text,
+        user_input: data.transcribed_text,
+        chatbot_response: data.chatbot_response,
         timestamp: new Date().toLocaleTimeString()
       }])
     } catch (err) {
@@ -65,8 +72,8 @@ export default function ChatBot() {
       setChatMessages([...chatMessages, {
         id: Date.now(),
         type: 'message',
-        original_text: data.original_text,
-        formal_text: data.formal_text,
+        user_input: data.transcribed_text,
+        chatbot_response: data.chatbot_response,
         timestamp: new Date().toLocaleTimeString()
       }])
     } catch (err) {
@@ -94,7 +101,7 @@ export default function ChatBot() {
             </div>
             <div className="header-text">
               <h1>OratorAI</h1>
-              <p>Professional Speech-to-Text Transcription</p>
+              <p>AI-Powered Conversational Chatbot with Audio Transcription</p>
             </div>
           </div>
         </div>
@@ -124,7 +131,7 @@ export default function ChatBot() {
                 {isLoading && (
                   <div className="loading-state">
                     <div className="spinner"></div>
-                    <p>Processing audio...</p>
+                    <p>Processing audio and generating response...</p>
                   </div>
                 )}
 
@@ -149,7 +156,7 @@ export default function ChatBot() {
 
       <footer className="chatbot-footer">
         <div className="footer-content">
-          <p>&copy; 2024 OratorAI. Transforming speech into text.</p>
+          <p>&copy; 2024 OratorAI. Intelligent Chatbot with Voice Input.</p>
           <div className="footer-mic">
             <AudioRecorder
               onTranscribe={handleTranscribe}
