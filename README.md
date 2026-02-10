@@ -5,7 +5,7 @@
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)](https://reactjs.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.128-009688?logo=fastapi)](https://fastapi.tiangolo.com)
 
-An intelligent voice-powered AI chatbot that combines OpenAI Whisper for speech-to-text transcription with Perplexity AI for smart conversational responses.
+Adizoon is an intelligent conversational AI chatbot that integrates real-time audio transcription with interactive dialogue. Users can record audio or type text within the system, which is transcribed and processed through the chatbot to deliver intelligent responses and engaging conversations.
 
 ## Features
 
