@@ -17,22 +17,22 @@ An intelligent voice-powered AI chatbot that combines OpenAI Whisper for speech-
 ![Login](./img/1.png)
 
 ### Chat Interface
-![Chat Interface](./img/2.png)
+![OTP Code Interface](./img/2.png)
 
 ### Voice Recording
-![Voice Recording](./img/3.png)
+![User Profile](./img/3.png)
 
 ### AI Response
 ![AI Response](./img/4.png)
 
 ### Profile Page
-![Profile](./img/5.png)
+![Voice Recording Page](./img/5.png)
 
 ### Settings
-![Settings](./img/6.png)
+![AI Response](./img/6.png)
 
 ### About Page
-![About](./img/7.png)
+![Upgrade Plan](./img/7.png)
 
 ## Tech Stack
 
@@ -43,12 +43,6 @@ An intelligent voice-powered AI chatbot that combines OpenAI Whisper for speech-
 | Speech-to-Text | OpenAI Whisper |
 | AI Chat | Perplexity AI (sonar-pro) |
 
-## Quick Start
-
-### Prerequisites
-- Python 3.11+
-- Node.js 18+
-- Perplexity API Key
 
 ### Backend Setup
 
@@ -81,30 +75,7 @@ Open http://localhost:5173 in your browser.
 
 ## How It Works
 
-```
-┌─────────────────┐
-│  🎤 Record      │
-│     Audio       │
-└────────┬────────┘
-         │
-         ▼
-┌─────────────────┐
-│  🎧 Whisper     │
-│  Transcription  │
-└────────┬────────┘
-         │
-         ▼
-┌─────────────────┐
-│  🤖 Perplexity  │
-│     AI Chat     │
-└────────┬────────┘
-         │
-         ▼
-┌─────────────────┐
-│  💬 Display     │
-│    Response     │
-└─────────────────┘
-```
+![System Flow](./img/system%20flow_chat.png)
 
 ## Project Structure
 
@@ -132,10 +103,6 @@ adizoon_ai/
 | GET | `/health` | Health check |
 | POST | `/transcribe` | Transcribe audio and get AI response |
 | POST | `/chat` | Text-based chat |
-
-## License
-
-MIT
 
 ## Author
 
