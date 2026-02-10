@@ -9,7 +9,7 @@ An intelligent voice-powered AI chatbot that combines OpenAI Whisper for speech-
 
 ## Features
 
-![Features](./img/features.png)
+![Features](./img/key_features.png)
 
 ## Screenshots
 
