@@ -1,6 +1,4 @@
 # Adizoon AI
-
-[![GitHub](https://img.shields.io/badge/GitHub-adizoon__ai-blue?logo=github)](https://github.com/arshadziban/adizoon_ai)
 [![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python)](https://python.org)
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)](https://reactjs.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.128-009688?logo=fastapi)](https://fastapi.tiangolo.com)
